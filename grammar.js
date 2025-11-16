@@ -18,6 +18,7 @@ module.exports = grammar({
 
   conflicts: $ => [
     [$.pair],
+    [$.array_value, $.value],
   ],
 
   extras: $ => [
@@ -68,8 +69,7 @@ module.exports = grammar({
         ':',
         optional(/[ \t]+/),
         field('value', choice(
-          prec(2, seq($.inline_values, $._newline)),
-          prec(1, seq($.value, $._newline)),
+          seq($.value, $._newline),
           seq($._newline, $.object)
         ))
       )
@@ -117,12 +117,21 @@ module.exports = grammar({
     delimiter: $ => token.immediate(choice('\t', '|')),
 
     inline_values: $ => seq(
-      $.value,
+      alias($.array_value, $.value),
       repeat(seq(
         choice(',', '|', '\t'),
         optional(/[ \t]*/),
-        $.value
+        alias($.array_value, $.value)
       ))
+    ),
+
+    // Values used in array contexts (inline arrays and list items)
+    array_value: $ => choice(
+      $.null,
+      $.boolean,
+      $.number,
+      $.string,
+      alias($.array_unquoted_string, $.unquoted_string)
     ),
 
     field_list: $ => seq(
@@ -180,7 +189,7 @@ module.exports = grammar({
       $.boolean,
       $.number,
       $.string,
-      $.unquoted_string
+      alias($.array_unquoted_string, $.unquoted_string)
     ),
 
     object_row: $ => choice(
@@ -240,13 +249,23 @@ module.exports = grammar({
       $.unquoted_string
     ),
 
-    // Unquoted strings: cannot start with -, and cannot contain : " [ ] { } , | \t \n \r or have leading/trailing space
+    // Unquoted strings: cannot start with -, and cannot contain : " [ ] { } \n \r or have leading/trailing space
+    // Note: Delimiters (comma, pipe, tab) are allowed in unquoted strings for object values (no array header)
+    // They are only special within array inline values/tabular rows (where splitting occurs)
     // This pattern explicitly excludes strings that would be valid numbers (those use the number rule)
-    // Strategy: match strings that contain at least one character that makes them non-numeric
     unquoted_string: $ => token(choice(
-      // Starts with non-digit (but not -), anything after
-      seq(/[^\s:"\[\]{},|\t\n\r\-0-9]/, optional(/[^\n\r:"\[\]{},|\t]+/), optional(/[^\s:"\[\]{},|\t\n\r]/)),
+      // Starts with non-digit (but not -), anything after (excluding only structural chars, not delimiters)
+      seq(/[^\s:"\[\]{}\n\r\-0-9]/, optional(/[^\n\r:"\[\]{}]+/), optional(/[^\s:"\[\]{}\n\r]/)),
       // Starts with digit, has non-number chars in middle/end
+      seq(/[0-9]/, /[^\n\r:"\[\]{}]*[^\s:"\[\]{}\n\r0-9eE+.\-]/, optional(/[^\n\r:"\[\]{}]*/), optional(/[^\s:"\[\]{}\n\r]/))
+    )),
+
+    // Array unquoted strings: used in inline arrays and tabular rows where delimiters are special
+    // Must exclude comma, pipe, and tab since those are used to split values
+    array_unquoted_string: $ => token(choice(
+      // Starts with non-digit (but not -), anything after (excluding delimiters)
+      seq(/[^\s:"\[\]{},|\t\n\r\-0-9]/, optional(/[^\n\r:"\[\]{},|\t]+/), optional(/[^\s:"\[\]{},|\t\n\r]/)),
+      // Starts with digit, has non-number chars in middle/end (excluding delimiters)
       seq(/[0-9]/, /[^\n\r:"\[\]{},|\t]*[^\s:"\[\]{},|\t\n\r0-9eE+.\-]/, optional(/[^\n\r:"\[\]{},|\t]*/), optional(/[^\s:"\[\]{},|\t\n\r]/))
     )),
 

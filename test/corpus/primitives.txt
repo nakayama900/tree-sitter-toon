@@ -421,3 +421,22 @@ version: 1.0
       (pair
         key: (key (unquoted_key))
         value: (value (number))))))
+
+==================
+Unquoted string - delimiter context (object value)
+==================
+
+flag: true|false
+data: value1,value2,value3
+
+---
+
+(source_file
+  (document
+    (object
+      (pair
+        key: (key (unquoted_key))
+        value: (value (unquoted_string)))
+      (pair
+        key: (key (unquoted_key))
+        value: (value (unquoted_string))))))
