@@ -4,12 +4,21 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tree-sitter-toon"
-description = "Toon grammar for tree-sitter"
+description = "TOON (Token-Oriented Object Notation) grammar for tree-sitter"
 version = "0.0.1"
-keywords = ["incremental", "parsing", "tree-sitter", "toon"]
+keywords = ["incremental", "parsing", "tree-sitter", "toon", "serialization", "data-format"]
 classifiers = [
+  "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "Programming Language :: C",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
   "Topic :: Software Development :: Compilers",
+  "Topic :: Software Development :: Libraries :: Python Modules",
   "Topic :: Text Processing :: Linguistic",
   "Typing :: Typed",
 ]
@@ -20,6 +29,9 @@ readme = "README.md"
 
 [project.urls]
 Homepage = "https://github.com/3swordman/tree-sitter-toon"
+Repository = "https://github.com/3swordman/tree-sitter-toon"
+Issues = "https://github.com/3swordman/tree-sitter-toon/issues"
+Changelog = "https://github.com/3swordman/tree-sitter-toon/releases"
 
 [project.optional-dependencies]
 core = ["tree-sitter~=0.24"]
