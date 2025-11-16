@@ -440,3 +440,92 @@ data: value1,value2,value3
       (pair
         key: (key (unquoted_key))
         value: (value (unquoted_string))))))
+
+==================
+Unquoted string - leading zeros (forbidden in numbers)
+==================
+
+code: 00001
+zip: 00501
+id: 007
+padded: 0042
+
+---
+
+(source_file
+  (document
+    (object
+      (pair
+        key: (key (unquoted_key))
+        value: (value (unquoted_string)))
+      (pair
+        key: (key (unquoted_key))
+        value: (value (unquoted_string)))
+      (pair
+        key: (key (unquoted_key))
+        value: (value (unquoted_string)))
+      (pair
+        key: (key (unquoted_key))
+        value: (value (unquoted_string))))))
+
+==================
+Numbers - valid zero cases
+==================
+
+zero: 0
+negative_zero: -0
+decimal: 0.5
+negative_decimal: -0.25
+exponent: 0e10
+
+---
+
+(source_file
+  (document
+    (object
+      (pair
+        key: (key (unquoted_key))
+        value: (value (number)))
+      (pair
+        key: (key (unquoted_key))
+        value: (value (number)))
+      (pair
+        key: (key (unquoted_key))
+        value: (value (number)))
+      (pair
+        key: (key (unquoted_key))
+        value: (value (number)))
+      (pair
+        key: (key (unquoted_key))
+        value: (value (number))))))
+
+==================
+Mixed - numbers vs leading zero strings
+==================
+
+valid_num: 42
+valid_zero: 0
+valid_decimal: 0.5
+invalid_leading: 007
+invalid_padded: 0001
+
+---
+
+(source_file
+  (document
+    (object
+      (pair
+        key: (key (unquoted_key))
+        value: (value (number)))
+      (pair
+        key: (key (unquoted_key))
+        value: (value (number)))
+      (pair
+        key: (key (unquoted_key))
+        value: (value (number)))
+      (pair
+        key: (key (unquoted_key))
+        value: (value (unquoted_string)))
+      (pair
+        key: (key (unquoted_key))
+        value: (value (unquoted_string))))))

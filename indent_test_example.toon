@@ -1,0 +1,12 @@
+primitives:
+  null_value: null
+  bool_true: true
+  number: 42
+nested:
+  level2:
+    level3: deep_value
+arrays:
+  inline[3]: a,b,c
+  table[2]{id,name}:
+    1,Alice
+    2,Bob

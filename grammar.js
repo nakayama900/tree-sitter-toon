@@ -47,31 +47,36 @@ module.exports = grammar({
       seq($._indent, repeat1($.pair), $._dedent)
     ),
 
-    pair: $ => choice(
-      // Pair with header (array)
-      seq(
-        field('key', $.key),
-        $.header,
-        ':',
-        optional(/[ \t]+/),
-        choice(
-          // Inline array  
-          seq(field('value', $.inline_values), $._newline),
-          // Newline followed by indented array body
-          seq($._newline, $._indent, field('value', $.array_body), $._dedent),
-          // Empty array - just newline
-          prec.dynamic(-1, $._newline)
+    pair: $ => seq(
+      field('key', $.key),
+      choice(
+        // Pair with header (array)
+        seq(
+          $.header,
+          ':',
+          optional(/[ \t]+/),
+          choice(
+            // Inline array  
+            seq(field('value', $.inline_values), $._newline),
+            // Newline followed by indented array body
+            seq($._newline, $._indent, field('value', $.array_body), $._dedent),
+            // Empty array - just newline
+            prec.dynamic(-1, $._newline)
+          )
+        ),
+        // Pair without header - primitive value
+        seq(
+          ':',
+          optional(/[ \t]+/),
+          field('value', $.value),
+          $._newline
+        ),
+        // Pair without header - nested object
+        seq(
+          ':',
+          $._newline,
+          field('value', $.object)
         )
-      ),
-      // Pair without header  
-      seq(
-        field('key', $.key),
-        ':',
-        optional(/[ \t]+/),
-        field('value', choice(
-          seq($.value, $._newline),
-          seq($._newline, $.object)
-        ))
       )
     ),
 
@@ -256,6 +261,8 @@ module.exports = grammar({
     unquoted_string: $ => token(choice(
       // Starts with non-digit (but not -), anything after (excluding only structural chars, not delimiters)
       seq(/[^\s:"\[\]{}\n\r\-0-9]/, optional(/[^\n\r:"\[\]{}]+/), optional(/[^\s:"\[\]{}\n\r]/)),
+      // Starts with "0" followed by digits (forbidden leading zeros - must be string)
+      seq('0', /[0-9]/, optional(/[^\n\r:"\[\]{}]*/), optional(/[^\s:"\[\]{}\n\r]/)),
       // Starts with digit, has non-number chars in middle/end
       seq(/[0-9]/, /[^\n\r:"\[\]{}]*[^\s:"\[\]{}\n\r0-9eE+.\-]/, optional(/[^\n\r:"\[\]{}]*/), optional(/[^\s:"\[\]{}\n\r]/))
     )),
@@ -265,6 +272,8 @@ module.exports = grammar({
     array_unquoted_string: $ => token(choice(
       // Starts with non-digit (but not -), anything after (excluding delimiters)
       seq(/[^\s:"\[\]{},|\t\n\r\-0-9]/, optional(/[^\n\r:"\[\]{},|\t]+/), optional(/[^\s:"\[\]{},|\t\n\r]/)),
+      // Starts with "0" followed by digits (forbidden leading zeros - must be string)
+      seq('0', /[0-9]/, optional(/[^\n\r:"\[\]{},|\t]*/), optional(/[^\s:"\[\]{},|\t\n\r]/)),
       // Starts with digit, has non-number chars in middle/end (excluding delimiters)
       seq(/[0-9]/, /[^\n\r:"\[\]{},|\t]*[^\s:"\[\]{},|\t\n\r0-9eE+.\-]/, optional(/[^\n\r:"\[\]{},|\t]*/), optional(/[^\s:"\[\]{},|\t\n\r]/))
     )),
