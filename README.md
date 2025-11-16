@@ -2,7 +2,23 @@
 
 A complete tree-sitter grammar implementation for TOON (Token-Oriented Object Notation) v2.0.
 
-## Quick Start
+## Installation
+
+### Python
+
+```bash
+pip install tree-sitter-toon
+```
+
+```python
+from tree_sitter import Parser
+from tree_sitter_toon import language
+
+parser = Parser(language())
+tree = parser.parse(b"name: value")
+```
+
+### Development
 
 ```bash
 # Generate parser
