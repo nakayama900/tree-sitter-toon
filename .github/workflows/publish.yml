@@ -69,7 +69,15 @@ jobs:
         with:
           pattern: cibw-*
           path: dist
-          merge-multiple: true
+
+      - name: Merge artifacts
+        run: |
+          mkdir -p dist-merged
+          find dist -name "*.whl" -exec cp {} dist-merged/ \;
+          find dist -name "*.tar.gz" -exec cp {} dist-merged/ \;
+          mv dist-merged dist-final
+          rm -rf dist
+          mv dist-final dist
 
       - name: List all files
         run: ls -lh dist/
