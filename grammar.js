@@ -19,6 +19,7 @@ module.exports = grammar({
   conflicts: $ => [
     [$.pair],
     [$.array_value, $.value],
+    [$.object_with_first_field],
   ],
 
   extras: $ => [
@@ -211,12 +212,13 @@ module.exports = grammar({
       ))
     ),
 
-    object_with_first_field: $ => prec.left(seq(
+    object_with_first_field: $ => seq(
       // First field on the hyphen line
       alias($.first_field, $.pair),
       // Remaining fields indented
-      optional(seq($._indent, repeat($.pair), $._dedent))
-    )),
+      // Use dynamic precedence to prefer exiting early
+      optional(prec.dynamic(-1, seq($._indent, repeat($.pair), $._dedent)))
+    ),
 
     first_field: $ => choice(
       // Field with header (array)

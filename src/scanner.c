@@ -139,8 +139,9 @@ bool tree_sitter_toon_external_scanner_scan(void *payload, TSLexer *lexer, const
       return true;
     }
     
-    // Dedent
-    if (indent_length < current_indent && valid_symbols[DEDENT]) {
+    // Dedent - always emit when indentation decreases
+    // The parser will handle multiple dedents in sequence
+    if (indent_length < current_indent) {
       array_pop(&scanner->indents);
       lexer->result_symbol = DEDENT;
       return true;
