@@ -192,11 +192,13 @@ List array with nested object
 ==================
 
 records[2]:
-  - id: 1
+  -
+    id: 1
     data:
       x: 10
       y: 20
-  - id: 2
+  -
+    id: 2
     data:
       x: 30
       y: 40
@@ -207,7 +209,8 @@ records[2]:
   (document
     (object
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         (header
           length: (number))
         value: (array_body
@@ -215,29 +218,43 @@ records[2]:
             (object_row
               (object
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (number)))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (number)))
                 (pair
-                  key: (key (unquoted_key))
+                  key: (key
+                    (unquoted_key))
                   value: (object
                     (pair
-                      key: (key (unquoted_key))
-                      value: (value (number)))
+                      key: (key
+                        (unquoted_key))
+                      value: (value
+                        (number)))
                     (pair
-                      key: (key (unquoted_key))
-                      value: (value (number))))))))
+                      key: (key
+                        (unquoted_key))
+                      value: (value
+                        (number))))))))
           (row
             (object_row
               (object
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (number)))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (number)))
                 (pair
-                  key: (key (unquoted_key))
+                  key: (key
+                    (unquoted_key))
                   value: (object
                     (pair
-                      key: (key (unquoted_key))
-                      value: (value (number)))
+                      key: (key
+                        (unquoted_key))
+                      value: (value
+                        (number)))
                     (pair
-                      key: (key (unquoted_key))
-                      value: (value (number)))))))))))))
+                      key: (key
+                        (unquoted_key))
+                      value: (value
+                        (number))))))))))))
