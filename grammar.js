@@ -168,14 +168,14 @@ module.exports = grammar({
       $.delimited_values
     ),
 
-    single_value: $ => $.value,
+    single_value: $ => alias($.array_value, $.value),
 
     delimited_values: $ => seq(
-      $.value,
+      alias($.array_value, $.value),
       repeat1(seq(
         choice(',', '|', '\t'),
         optional(/[ \t]*/),
-        $.value
+        alias($.array_value, $.value)
       ))
     ),
 
@@ -211,12 +211,12 @@ module.exports = grammar({
       ))
     ),
 
-    object_with_first_field: $ => prec.left(seq(
+    object_with_first_field: $ => seq(
       // First field on the hyphen line
       alias($.first_field, $.pair),
       // Remaining fields indented
       optional(seq($._indent, repeat($.pair), $._dedent))
-    )),
+    ),
 
     first_field: $ => choice(
       // Field with header (array)
