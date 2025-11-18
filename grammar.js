@@ -212,13 +212,12 @@ module.exports = grammar({
       ))
     ),
 
-    object_with_first_field: $ => seq(
+    object_with_first_field: $ => prec.left(seq(
       // First field on the hyphen line
       alias($.first_field, $.pair),
       // Remaining fields indented
-      // Use dynamic precedence to prefer exiting early
-      optional(prec.dynamic(-1, seq($._indent, repeat($.pair), $._dedent)))
-    ),
+      optional(seq($._indent, repeat($.pair), $._dedent))
+    )),
 
     first_field: $ => choice(
       // Field with header (array)

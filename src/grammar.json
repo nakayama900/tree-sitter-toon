@@ -882,24 +882,24 @@
       ]
     },
     "object_with_first_field": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "first_field"
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "first_field"
+            },
+            "named": true,
+            "value": "pair"
           },
-          "named": true,
-          "value": "pair"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "PREC_DYNAMIC",
-              "value": -1,
-              "content": {
+          {
+            "type": "CHOICE",
+            "members": [
+              {
                 "type": "SEQ",
                 "members": [
                   {
@@ -918,14 +918,14 @@
                     "name": "_dedent"
                   }
                 ]
+              },
+              {
+                "type": "BLANK"
               }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        }
-      ]
+            ]
+          }
+        ]
+      }
     },
     "first_field": {
       "type": "CHOICE",
