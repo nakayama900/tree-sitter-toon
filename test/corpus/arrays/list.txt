@@ -152,7 +152,7 @@ matrix[2]:
                   value: (inline_values
                     (value (number))
                     (value (number))
-                    (value (number)))))))))))))
+                    (value (number))))))))))))
 
 ==================
 List array with delimited values
