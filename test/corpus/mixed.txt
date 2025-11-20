@@ -153,16 +153,18 @@ level1:
                       length: (number))
                     value: (inline_values
                       (value (unquoted_string))
-                      (value (unquoted_string))))))))))))))
+                      (value (unquoted_string)))))))))))))
 
 ==================
 List array with mixed content types
 ==================
 
 data[3]:
-  - name: Item1
+  -
+    name: Item1
     value: 100
-  - name: Item2
+  -
+    name: Item2
     tags[2]: a,b
   - simple_value
 
