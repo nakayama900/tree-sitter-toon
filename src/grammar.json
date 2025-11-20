@@ -655,25 +655,15 @@
       ]
     },
     "single_value": {
-      "type": "ALIAS",
-      "content": {
-        "type": "SYMBOL",
-        "name": "array_value"
-      },
-      "named": true,
-      "value": "value"
+      "type": "SYMBOL",
+      "name": "value"
     },
     "delimited_values": {
       "type": "SEQ",
       "members": [
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "array_value"
-          },
-          "named": true,
-          "value": "value"
+          "type": "SYMBOL",
+          "name": "value"
         },
         {
           "type": "REPEAT1",
@@ -710,13 +700,8 @@
                 ]
               },
               {
-                "type": "ALIAS",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "array_value"
-                },
-                "named": true,
-                "value": "value"
+                "type": "SYMBOL",
+                "name": "value"
               }
             ]
           }
@@ -1531,9 +1516,6 @@
     [
       "array_value",
       "value"
-    ],
-    [
-      "object_with_first_field"
     ]
   ],
   "precedences": [],
