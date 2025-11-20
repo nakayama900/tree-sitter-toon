@@ -1,6 +1,7 @@
+#include <wctype.h>
+
 #include "tree_sitter/array.h"
 #include "tree_sitter/parser.h"
-#include <wctype.h>
 
 enum TokenType {
   INDENT,
@@ -21,26 +22,24 @@ typedef struct Scanner {
   Array(IndentLevel) indents;
 } Scanner;
 
-static inline void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
-static inline void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
+static inline void advance(TSLexer* lexer) { lexer->advance(lexer, false); }
+static inline void skip(TSLexer* lexer) { lexer->advance(lexer, true); }
 
-void *tree_sitter_toon_external_scanner_create() {
-  Scanner *scanner = (Scanner *)calloc(1, sizeof(Scanner));
+void* tree_sitter_toon_external_scanner_create() {
+  Scanner* scanner = (Scanner*)calloc(1, sizeof(Scanner));
   array_init(&scanner->indents);
-  array_push(&scanner->indents,
-             ((IndentLevel){.length = 0, .context = NORMAL_CONTEXT}));
+  array_push(&scanner->indents, ((IndentLevel){.length = 0, .context = NORMAL_CONTEXT}));
   return scanner;
 }
 
-void tree_sitter_toon_external_scanner_destroy(void *payload) {
-  Scanner *scanner = (Scanner *)payload;
+void tree_sitter_toon_external_scanner_destroy(void* payload) {
+  Scanner* scanner = (Scanner*)payload;
   array_delete(&scanner->indents);
   free(scanner);
 }
 
-unsigned tree_sitter_toon_external_scanner_serialize(void *payload,
-                                                     char *buffer) {
-  Scanner *scanner = (Scanner *)payload;
+unsigned tree_sitter_toon_external_scanner_serialize(void* payload, char* buffer) {
+  Scanner* scanner = (Scanner*)payload;
   size_t size = scanner->indents.size * sizeof(IndentLevel);
 
   if (size > TREE_SITTER_SERIALIZATION_BUFFER_SIZE) {
@@ -53,15 +52,13 @@ unsigned tree_sitter_toon_external_scanner_serialize(void *payload,
   return size;
 }
 
-void tree_sitter_toon_external_scanner_deserialize(void *payload,
-                                                   const char *buffer,
+void tree_sitter_toon_external_scanner_deserialize(void* payload, const char* buffer,
                                                    unsigned length) {
-  Scanner *scanner = (Scanner *)payload;
+  Scanner* scanner = (Scanner*)payload;
   array_clear(&scanner->indents);
 
   if (length == 0) {
-    array_push(&scanner->indents,
-               ((IndentLevel){.length = 0, .context = NORMAL_CONTEXT}));
+    array_push(&scanner->indents, ((IndentLevel){.length = 0, .context = NORMAL_CONTEXT}));
     return;
   }
 
@@ -73,7 +70,7 @@ void tree_sitter_toon_external_scanner_deserialize(void *payload,
   }
 }
 
-static bool scan_whitespace(TSLexer *lexer, uint32_t *indent_length) {
+static bool scan_whitespace(TSLexer* lexer, uint32_t* indent_length) {
   *indent_length = 0;
 
   while (true) {
@@ -92,9 +89,9 @@ static bool scan_whitespace(TSLexer *lexer, uint32_t *indent_length) {
   return true;
 }
 
-bool tree_sitter_toon_external_scanner_scan(void *payload, TSLexer *lexer,
-                                            const bool *valid_symbols) {
-  Scanner *scanner = (Scanner *)payload;
+bool tree_sitter_toon_external_scanner_scan(void* payload, TSLexer* lexer,
+                                            const bool* valid_symbols) {
+  Scanner* scanner = (Scanner*)payload;
 
   // Mark the end of the token (initially empty).
   // If we return true without calling mark_end again, the lexer will rewind to
@@ -110,7 +107,7 @@ bool tree_sitter_toon_external_scanner_scan(void *payload, TSLexer *lexer,
     if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
       has_newline = true;
       skip(lexer);
-      indent_length = 0; // Reset indent length on new line
+      indent_length = 0;  // Reset indent length on new line
       start_col = 0;
     } else if (lexer->lookahead == ' ' || lexer->lookahead == '\t') {
       if (lexer->lookahead == ' ') {
@@ -148,8 +145,8 @@ bool tree_sitter_toon_external_scanner_scan(void *payload, TSLexer *lexer,
       if (lexer->lookahead == '-') {
         new_context = LIST_ITEM_CONTEXT;
       }
-      array_push(&scanner->indents, ((IndentLevel){.length = indent_length,
-                                                   .context = new_context}));
+      array_push(&scanner->indents,
+                 ((IndentLevel){.length = indent_length, .context = new_context}));
       lexer->result_symbol = INDENT;
       // Commit the consumed newlines and indentation
       lexer->mark_end(lexer);
