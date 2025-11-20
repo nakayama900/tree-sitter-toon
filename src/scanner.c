@@ -8,18 +8,8 @@ enum TokenType {
   DEDENT,
 };
 
-typedef enum {
-  NORMAL_CONTEXT,
-  LIST_ITEM_CONTEXT,
-} IndentContext;
-
-typedef struct {
-  uint32_t length;
-  IndentContext context;
-} IndentLevel;
-
 typedef struct Scanner {
-  Array(IndentLevel) indents;
+  Array(uint32_t) indents;
 } Scanner;
 
 static inline void advance(TSLexer* lexer) { lexer->advance(lexer, false); }
@@ -28,7 +18,7 @@ static inline void skip(TSLexer* lexer) { lexer->advance(lexer, true); }
 void* tree_sitter_toon_external_scanner_create() {
   Scanner* scanner = (Scanner*)calloc(1, sizeof(Scanner));
   array_init(&scanner->indents);
-  array_push(&scanner->indents, ((IndentLevel){.length = 0, .context = NORMAL_CONTEXT}));
+  array_push(&scanner->indents, 0);
   return scanner;
 }
 
@@ -40,13 +30,13 @@ void tree_sitter_toon_external_scanner_destroy(void* payload) {
 
 unsigned tree_sitter_toon_external_scanner_serialize(void* payload, char* buffer) {
   Scanner* scanner = (Scanner*)payload;
-  size_t size = scanner->indents.size * sizeof(IndentLevel);
+  size_t size = scanner->indents.size * sizeof(uint32_t);
 
   if (size > TREE_SITTER_SERIALIZATION_BUFFER_SIZE) {
     size = TREE_SITTER_SERIALIZATION_BUFFER_SIZE;
   }
 
-  size = (size / sizeof(IndentLevel)) * sizeof(IndentLevel);
+  size = (size / sizeof(uint32_t)) * sizeof(uint32_t);
 
   memcpy(buffer, scanner->indents.contents, size);
   return size;
@@ -58,35 +48,16 @@ void tree_sitter_toon_external_scanner_deserialize(void* payload, const char* bu
   array_clear(&scanner->indents);
 
   if (length == 0) {
-    array_push(&scanner->indents, ((IndentLevel){.length = 0, .context = NORMAL_CONTEXT}));
+    array_push(&scanner->indents, 0);
     return;
   }
 
-  size_t size = length / sizeof(IndentLevel);
+  size_t size = length / sizeof(uint32_t);
   for (size_t i = 0; i < size; i++) {
-    IndentLevel indent;
-    memcpy(&indent, buffer + (i * sizeof(IndentLevel)), sizeof(IndentLevel));
+    uint32_t indent;
+    memcpy(&indent, buffer + (i * sizeof(uint32_t)), sizeof(uint32_t));
     array_push(&scanner->indents, indent);
   }
-}
-
-static bool scan_whitespace(TSLexer* lexer, uint32_t* indent_length) {
-  *indent_length = 0;
-
-  while (true) {
-    if (lexer->lookahead == ' ') {
-      (*indent_length)++;
-      skip(lexer);
-    } else if (lexer->lookahead == '\t') {
-      // Tabs count as moving to next tab stop (every 2 spaces for TOON)
-      (*indent_length) = ((*indent_length) + 2) & ~1;
-      skip(lexer);
-    } else {
-      break;
-    }
-  }
-
-  return true;
 }
 
 bool tree_sitter_toon_external_scanner_scan(void* payload, TSLexer* lexer,
@@ -136,17 +107,12 @@ bool tree_sitter_toon_external_scanner_scan(void* payload, TSLexer* lexer,
     return false;
   }
 
-  uint32_t current_indent = array_back(&scanner->indents)->length;
+  uint32_t current_indent = *array_back(&scanner->indents);
 
   // Indent
   if (indent_length > current_indent) {
     if (valid_symbols[INDENT]) {
-      IndentContext new_context = NORMAL_CONTEXT;
-      if (lexer->lookahead == '-') {
-        new_context = LIST_ITEM_CONTEXT;
-      }
-      array_push(&scanner->indents,
-                 ((IndentLevel){.length = indent_length, .context = new_context}));
+      array_push(&scanner->indents, indent_length);
       lexer->result_symbol = INDENT;
       // Commit the consumed newlines and indentation
       lexer->mark_end(lexer);
