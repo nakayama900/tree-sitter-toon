@@ -103,7 +103,7 @@ module.exports = grammar({
     ),
 
     array_body: $ => repeat1(choice(
-      prec(2, $.row),
+      prec(3, $.row),
       prec(1, $.tabular_row)
     )),
 
@@ -136,7 +136,8 @@ module.exports = grammar({
       $.boolean,
       $.number,
       $.string,
-      alias($.array_unquoted_string, $.unquoted_string)
+      alias($.array_unquoted_string, $.unquoted_string),
+      alias($.unquoted_key, $.unquoted_string)
     ),
 
     field_list: $ => seq(
@@ -153,7 +154,7 @@ module.exports = grammar({
     ),
 
     row: $ => choice(
-      prec(2, $.value_row),
+      prec(3, $.value_row),
       prec(1, $.object_row)
     ),
 
@@ -168,14 +169,14 @@ module.exports = grammar({
       $.delimited_values
     ),
 
-    single_value: $ => $.value,
+    single_value: $ => $.array_value,
 
     delimited_values: $ => seq(
-      $.value,
+      $.array_value,
       repeat1(seq(
         choice(',', '|', '\t'),
         optional(/[ \t]*/),
-        $.value
+        $.array_value
       ))
     ),
 
@@ -194,7 +195,8 @@ module.exports = grammar({
       $.boolean,
       $.number,
       $.string,
-      alias($.array_unquoted_string, $.unquoted_string)
+      alias($.array_unquoted_string, $.unquoted_string),
+      alias($.unquoted_key, $.unquoted_string)
     ),
 
     object_row: $ => choice(
@@ -251,7 +253,8 @@ module.exports = grammar({
       $.null,
       $.boolean,
       $.number,
-      $.unquoted_string
+      $.unquoted_string,
+      alias($.unquoted_key, $.unquoted_string)
     ),
 
     // Unquoted strings: cannot start with -, and cannot contain : " [ ] { } \n \r or have leading/trailing space

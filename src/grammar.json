@@ -348,7 +348,7 @@
         "members": [
           {
             "type": "PREC",
-            "value": 2,
+            "value": 3,
             "content": {
               "type": "SYMBOL",
               "name": "row"
@@ -537,6 +537,15 @@
           },
           "named": true,
           "value": "unquoted_string"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "unquoted_key"
+          },
+          "named": true,
+          "value": "unquoted_string"
         }
       ]
     },
@@ -596,7 +605,7 @@
       "members": [
         {
           "type": "PREC",
-          "value": 2,
+          "value": 3,
           "content": {
             "type": "SYMBOL",
             "name": "value_row"
@@ -656,14 +665,14 @@
     },
     "single_value": {
       "type": "SYMBOL",
-      "name": "value"
+      "name": "array_value"
     },
     "delimited_values": {
       "type": "SEQ",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "value"
+          "name": "array_value"
         },
         {
           "type": "REPEAT1",
@@ -701,7 +710,7 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "value"
+                "name": "array_value"
               }
             ]
           }
@@ -800,6 +809,15 @@
           "content": {
             "type": "SYMBOL",
             "name": "array_unquoted_string"
+          },
+          "named": true,
+          "value": "unquoted_string"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "unquoted_key"
           },
           "named": true,
           "value": "unquoted_string"
@@ -1070,6 +1088,15 @@
         {
           "type": "SYMBOL",
           "name": "unquoted_string"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "unquoted_key"
+          },
+          "named": true,
+          "value": "unquoted_string"
         }
       ]
     },

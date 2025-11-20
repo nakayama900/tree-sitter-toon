@@ -13,7 +13,8 @@ items[3]:
   (document
     (object
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         (header
           length: (number))
         value: (array_body
@@ -21,17 +22,20 @@ items[3]:
             (value_row
               (row_values
                 (single_value
-                  (value (string))))))
+                  (array_value
+                    (string))))))
           (row
             (value_row
               (row_values
                 (single_value
-                  (value (string))))))
+                  (array_value
+                    (string))))))
           (row
             (value_row
               (row_values
                 (single_value
-                  (value (string)))))))))))
+                  (array_value
+                    (string)))))))))))
 
 ==================
 List array with objects - first field on hyphen line
@@ -49,7 +53,8 @@ users[2]:
   (document
     (object
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         (header
           length: (number))
         value: (array_body
@@ -57,20 +62,28 @@ users[2]:
             (object_row
               (object
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (number)))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (number)))
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (unquoted_string))))))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (unquoted_string))))))
           (row
             (object_row
               (object
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (number)))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (number)))
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (unquoted_string)))))))))))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (unquoted_string)))))))))))
 
 ==================
 List array with objects - fully indented
@@ -90,7 +103,8 @@ items[2]:
   (document
     (object
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         (header
           length: (number))
         value: (array_body
@@ -98,20 +112,28 @@ items[2]:
             (object_row
               (object
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (unquoted_string)))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (unquoted_string)))
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (unquoted_string))))))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (unquoted_string))))))
           (row
             (object_row
               (object
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (unquoted_string)))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (unquoted_string)))
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (unquoted_string)))))))))))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (unquoted_string)))))))))))
 
 ==================
 List array with inline array on hyphen line
@@ -127,7 +149,8 @@ matrix[2]:
   (document
     (object
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         (header
           length: (number))
         value: (array_body
@@ -135,24 +158,32 @@ matrix[2]:
             (object_row
               (object
                 (pair
-                  key: (key (unquoted_key))
+                  key: (key
+                    (unquoted_key))
                   (header
                     length: (number))
                   value: (inline_values
-                    (value (number))
-                    (value (number))
-                    (value (number)))))))
+                    (value
+                      (number))
+                    (value
+                      (number))
+                    (value
+                      (number)))))))
           (row
             (object_row
               (object
                 (pair
-                  key: (key (unquoted_key))
+                  key: (key
+                    (unquoted_key))
                   (header
                     length: (number))
                   value: (inline_values
-                    (value (number))
-                    (value (number))
-                    (value (number)))))))))))))
+                    (value
+                      (number))
+                    (value
+                      (number))
+                    (value
+                      (number))))))))))))
 
 ==================
 List array with delimited values
@@ -168,7 +199,8 @@ data[2]:
   (document
     (object
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         (header
           length: (number))
         value: (array_body
@@ -176,16 +208,22 @@ data[2]:
             (value_row
               (row_values
                 (delimited_values
-                  (value (number))
-                  (value (number))
-                  (value (number))))))
+                  (array_value
+                    (number))
+                  (array_value
+                    (number))
+                  (array_value
+                    (number))))))
           (row
             (value_row
               (row_values
                 (delimited_values
-                  (value (number))
-                  (value (number))
-                  (value (number)))))))))))
+                  (array_value
+                    (number))
+                  (array_value
+                    (number))
+                  (array_value
+                    (number)))))))))))
 
 ==================
 List array with nested object
@@ -207,7 +245,8 @@ records[2]:
   (document
     (object
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         (header
           length: (number))
         value: (array_body
@@ -215,29 +254,43 @@ records[2]:
             (object_row
               (object
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (number)))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (number)))
                 (pair
-                  key: (key (unquoted_key))
+                  key: (key
+                    (unquoted_key))
                   value: (object
                     (pair
-                      key: (key (unquoted_key))
-                      value: (value (number)))
+                      key: (key
+                        (unquoted_key))
+                      value: (value
+                        (number)))
                     (pair
-                      key: (key (unquoted_key))
-                      value: (value (number))))))))
+                      key: (key
+                        (unquoted_key))
+                      value: (value
+                        (number))))))))
           (row
             (object_row
               (object
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (number)))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (number)))
                 (pair
-                  key: (key (unquoted_key))
+                  key: (key
+                    (unquoted_key))
                   value: (object
                     (pair
-                      key: (key (unquoted_key))
-                      value: (value (number)))
+                      key: (key
+                        (unquoted_key))
+                      value: (value
+                        (number)))
                     (pair
-                      key: (key (unquoted_key))
-                      value: (value (number)))))))))))))
+                      key: (key
+                        (unquoted_key))
+                      value: (value
+                        (number)))))))))))))

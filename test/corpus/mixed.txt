@@ -15,28 +15,40 @@ config:
   (document
     (object
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         value: (object
           (pair
-            key: (key (unquoted_key))
-            value: (value (unquoted_string)))
+            key: (key
+              (unquoted_key))
+            value: (value
+              (unquoted_string)))
           (pair
-            key: (key (unquoted_key))
+            key: (key
+              (unquoted_key))
             (header
               length: (number))
             value: (inline_values
-              (value (unquoted_string))
-              (value (unquoted_string))
-              (value (unquoted_string))))
+              (value
+                (unquoted_string))
+              (value
+                (unquoted_string))
+              (value
+                (unquoted_string))))
           (pair
-            key: (key (unquoted_key))
+            key: (key
+              (unquoted_key))
             value: (object
               (pair
-                key: (key (unquoted_key))
-                value: (value (boolean)))
+                key: (key
+                  (unquoted_key))
+                value: (value
+                  (boolean)))
               (pair
-                key: (key (unquoted_key))
-                value: (value (number))))))))))
+                key: (key
+                  (unquoted_key))
+                value: (value
+                  (number))))))))))
 
 ==================
 Multiple arrays in sequence
@@ -52,26 +64,35 @@ arr3[2]: e,f
   (document
     (object
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         (header
           length: (number))
         value: (inline_values
-          (value (unquoted_string))
-          (value (unquoted_string))))
+          (value
+            (unquoted_string))
+          (value
+            (unquoted_string))))
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         (header
           length: (number))
         value: (inline_values
-          (value (unquoted_string))
-          (value (unquoted_string))))
+          (value
+            (unquoted_string))
+          (value
+            (unquoted_string))))
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         (header
           length: (number))
         value: (inline_values
-          (value (unquoted_string))
-          (value (unquoted_string)))))))
+          (value
+            (unquoted_string))
+          (value
+            (unquoted_string)))))))
 
 ==================
 Array then object then array
@@ -88,25 +109,34 @@ last[2]: 3,4
   (document
     (object
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         (header
           length: (number))
         value: (inline_values
-          (value (number))
-          (value (number))))
+          (value
+            (number))
+          (value
+            (number))))
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         value: (object
           (pair
-            key: (key (unquoted_key))
-            value: (value (unquoted_string)))))
+            key: (key
+              (unquoted_key))
+            value: (value
+              (unquoted_string)))))
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         (header
           length: (number))
         value: (inline_values
-          (value (number))
-          (value (number)))))))
+          (value
+            (number))
+          (value
+            (number)))))))
 
 ==================
 Nested arrays at multiple levels
@@ -125,35 +155,47 @@ level1:
   (document
     (object
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         value: (object
           (pair
-            key: (key (unquoted_key))
+            key: (key
+              (unquoted_key))
             (header
               length: (number))
             value: (inline_values
-              (value (unquoted_string))
-              (value (unquoted_string))))
+              (value
+                (unquoted_string))
+              (value
+                (unquoted_string))))
           (pair
-            key: (key (unquoted_key))
+            key: (key
+              (unquoted_key))
             value: (object
               (pair
-                key: (key (unquoted_key))
+                key: (key
+                  (unquoted_key))
                 (header
                   length: (number))
                 value: (inline_values
-                  (value (unquoted_string))
-                  (value (unquoted_string))))
+                  (value
+                    (unquoted_string))
+                  (value
+                    (unquoted_string))))
               (pair
-                key: (key (unquoted_key))
+                key: (key
+                  (unquoted_key))
                 value: (object
                   (pair
-                    key: (key (unquoted_key))
+                    key: (key
+                      (unquoted_key))
                     (header
                       length: (number))
                     value: (inline_values
-                      (value (unquoted_string))
-                      (value (unquoted_string))))))))))))))
+                      (value
+                        (unquoted_string))
+                      (value
+                        (unquoted_string)))))))))))))
 
 ==================
 List array with mixed content types
@@ -172,7 +214,8 @@ data[3]:
   (document
     (object
       (pair
-        key: (key (unquoted_key))
+        key: (key
+          (unquoted_key))
         (header
           length: (number))
         value: (array_body
@@ -180,26 +223,36 @@ data[3]:
             (object_row
               (object
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (unquoted_string)))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (unquoted_string)))
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (number))))))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (number))))))
           (row
             (object_row
               (object
                 (pair
-                  key: (key (unquoted_key))
-                  value: (value (unquoted_string)))
+                  key: (key
+                    (unquoted_key))
+                  value: (value
+                    (unquoted_string)))
                 (pair
-                  key: (key (unquoted_key))
+                  key: (key
+                    (unquoted_key))
                   (header
                     length: (number))
                   value: (inline_values
-                    (value (unquoted_string))
-                    (value (unquoted_string)))))))
+                    (value
+                      (unquoted_string))
+                    (value
+                      (unquoted_string)))))))
           (row
             (value_row
               (row_values
                 (single_value
-                  (value (unquoted_string)))))))))))
+                  (array_value
+                    (unquoted_string)))))))))))
