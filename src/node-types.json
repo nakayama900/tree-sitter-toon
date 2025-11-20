@@ -189,13 +189,32 @@
     }
   },
   {
+    "type": "list_object_continuation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "pair",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "object",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
+        {
+          "type": "list_object_continuation",
+          "named": true
+        },
         {
           "type": "pair",
           "named": true
